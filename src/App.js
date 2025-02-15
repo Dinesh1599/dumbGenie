@@ -4,16 +4,21 @@ import genie from './assets/Norm-profileinfobox.webp'
 import dialogue from './assets/dialogue.json'
 function App() {
 
-  const [finput, setFinput] = useState(0)
+  const [number, setnumber] = useState(0)
 
   const checkValue = ()=>{
-    if(finput==null || finput ==0 )
+    if(number=='')
       {
-      console.log({dialogue})
-      alert("nothing")
+      const no = Math.floor(Math.random() * 5)
+      alert(`${dialogue.noNumberComments[no]}`)
+    }else if(number === 0){
+      const no = Math.floor(Math.random() * 5)
+      alert(`${dialogue.zeroComments[no]}`)
     }else{
-      const number  = finput
-
+      const no = Math.floor(Math.random() * 50)
+      const text = dialogue.genieResponses[no]
+      const replace = text.replace (/\$\{number\}/g,number)
+      alert(replace)
     }
   }
   
@@ -30,9 +35,9 @@ function App() {
       <img src={genie} alt='genie'/>
       <p>Ok mortal, think of number by typing it in!</p>
       <input type="number" 
-        value={finput} 
+        value={number} 
         placeholder='Dont tell me your number, just type it' 
-        onChange={e=>setFinput(e.target.value)}
+        onChange={e=>setnumber(e.target.value)}
         onKeyDown={handleKeyDown}
       />
       <button onClick={checkValue}>Click me</button>
